@@ -27,48 +27,84 @@ def centralizar_janela(root, largura, altura):
     pos_y = (altura_tela // 3) - (altura // 2)
     root.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")
 
-# Função para atualizar as opções do Combobox Process com base no Banco e Bandeira
+# Função para atualizar as opções do Combobox Process com base no Banco, Bandeira e Ambiente
 def atualizar_process(*args):
+    ambiente_selecionado = variable.get()  # Obtem a seleção do OptionMenu "opt_Ambiente"
     banco_selecionado = cbo_banco.get()
     bandeira_selecionada = cbo_bandeira.get()
 
-    # Define as opções de Process com base na seleção do Banco e Bandeira
-    
-    #AFINZ
-    if banco_selecionado == "AFINZ" and bandeira_selecionada == "AMEX":
-        process_opcoes = ["AFINZ_AMEX_Process1", "AFINZ_AMEX_Process2"]
-    #AFINZ
-    #BRADESCO
-    elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "ELO":
-        process_opcoes = ["BRADESCO_ELO_Process1", "BRADESCO_ELO_Process2"]
-    
-    elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "MC":
-        process_opcoes = ["BRADESCO_MC_Process1", "BRADESCO_MC_Process2"]
-     
-    elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "VISA":
-        process_opcoes = ["BRADESCO_VISA_Process1", "BRADESCO_VISA_Process2"]
-     
-    elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "AMEX":
-        process_opcoes = ["BRADESCO_AMEX_Process1", "BRADESCO_AMEX_Process2"]
-    #BRADESCO  
-    #ITAU
-    elif banco_selecionado == "ITAU" and bandeira_selecionada == "ELO":
-        process_opcoes = ["ITAU_ELO_Process1", "ITAU_ELO_Process2"]
-    elif banco_selecionado == "ITAU" and bandeira_selecionada == "MC":
-        process_opcoes = ["ITAU_MC_Process1", "ITAU_MC_Process2"]
-    elif banco_selecionado == "ITAU" and bandeira_selecionada == "VISA":
-        process_opcoes = ["ITAU_VISA_Process1", "ITAU_VISA_Process2"]
-    elif banco_selecionado == "ITAU" and bandeira_selecionada == "AMEX":
-        process_opcoes = ["ITAU_AMEX_Process1", "ITAU_AMEX_Process2"]
-    else:
-        process_opcoes = ["Sem Process"]
+    # Dependendo do ambiente, mudar as opções de "process"
+    if ambiente_selecionado == "Homologação":
+        #AFINZ
+        if banco_selecionado == "AFINZ" and bandeira_selecionada == "AMEX":
+            process_opcoes = ["AFINZ_AMEX_Homolog1", "AFINZ_AMEX_Homolog2"]
+        #AFINZ
         
+        #BRADESCO
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "ELO":
+            process_opcoes = ["BRADESCO_ELO_Homolog1", "BRADESCO_ELO_Homolog2"]
+        
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "MC":
+            process_opcoes = ["BRADESCO_MC_Homolog", "BRADESCO_MC_Homolog2"]
+        
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "VISA":
+            process_opcoes = ["BRADESCO_VISA_Homolog1", "BRADESCO_VISA_Homolog2"]
+        
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "AMEX":
+            process_opcoes = ["BRADESCO_AMEX_Homolog1", "BRADESCO_AMEX_Homolog2"]
+        #BRADESCO  
+        
+        #ITAU
+        elif banco_selecionado == "ITAU" and bandeira_selecionada == "MC":
+            process_opcoes = ["ITAU_MC_Homolog1", "ITAU_MC_Homolog2"]
+        elif banco_selecionado == "ITAU" and bandeira_selecionada == "VISA":
+            process_opcoes = ["ITAU_VISA_Homolog1", "ITAU_VISA_Homolog2"]
+        else:
+            process_opcoes = ["Sem Process"]
+        #ITAU
+
+    elif ambiente_selecionado == "Produção":
+        #AFINZ
+        if banco_selecionado == "AFINZ" and bandeira_selecionada == "AMEX":
+            process_opcoes = ["AFINZ_AMEX_Produção1", "AFINZ_AMEX_Produção2"]
+        #AFINZ
+        
+        #BRADESCO
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "ELO":
+            process_opcoes = ["BRADESCO_ELO_Produção1", "BRADESCO_ELO_Produção2"]
+        
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "MC":
+            process_opcoes = ["BRADESCO_MC_Produção1", "BRADESCO_MC_Produção2"]
+        
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "VISA":
+            process_opcoes = ["BRADESCO_VISA_Produção1", "BRADESCO_VISA_Produção2"]
+        
+        elif banco_selecionado == "BRADESCO" and bandeira_selecionada == "AMEX":
+            process_opcoes = ["BRADESCO_AMEX_Produção1", "BRADESCO_AMEX_Produção2"]
+        #BRADESCO  
+        
+        #ITAU
+        elif banco_selecionado == "ITAU" and bandeira_selecionada == "MC":
+            process_opcoes = ["ITAU_MC_Produção1", "ITAU_MC_Produção2"]
+        elif banco_selecionado == "ITAU" and bandeira_selecionada == "VISA":
+            process_opcoes = ["ITAU_VISA_Produção1", "ITAU_VISA_Produção2"]
+        else:
+            process_opcoes = ["Sem Process"]
+        #ITAU
 
     # Atualiza o Combobox de Process com as novas opções
     cbo_process.config(values=process_opcoes)
     cbo_process.set(process_opcoes[0])  # Define o primeiro item como o padrão
 
+    # Desativa o combobox se a opção for "Sem Process"
+    if process_opcoes[0] == "Sem Process":
+        cbo_process.config(state="disabled")
+    else:
+        cbo_process.config(state="readonly")
+
 pasta_inicial = 'C:/Users/mourabre/Desktop/criarjob/PRD'
+
+OptionList = ["Produção", "Homologação"]
 
 # Criar a janela principal
 root = Tk()
@@ -84,6 +120,14 @@ centralizar_janela(root, largura_janela, altura_janela)
 
 # Frame para organizar o layout
 frame = Frame(root)
+
+variable = tk.StringVar(root)
+variable.set(OptionList[0])
+
+# Criar o OptionMenu
+opt_Ambiente = tk.OptionMenu(root, variable, *OptionList)
+opt_Ambiente.config(width=13, background="#dedede")
+opt_Ambiente.place(x=517, y=6)
 
 # Label do caminho do arquivo
 labelcaminho = Label(text="Caminho do arquivo PRD:", font=10, bg="#dedede")
@@ -130,5 +174,8 @@ tipo_maquina_opcoes = ["Máquina A", "Máquina B", "Máquina C"]  # Lista de op�
 cbo_tipoMaquina = Combobox(root, values=tipo_maquina_opcoes, font=14, width=20, state="readonly")
 cbo_tipoMaquina.place(x=40, y=200)
 cbo_tipoMaquina.set("Selecione uma máquina")  # Texto padrão do combobox
+
+# Vincula o evento de mudança de ambiente à função de atualização de processo
+variable.trace("w", atualizar_process)
 
 root.mainloop()
